@@ -21,11 +21,11 @@ function App() {
     const { id } = todo;
 
     if (id) {
-      const newTask = todos.map((t) => (t.id === id ? { ...t, todo } : t));
+      const newTask = todos.map((t) => (t.id === id ? todo : t));
       setTodos(newTask);
       toast.info("Task updated successfully");
     } else {
-      setTodos((prev) => [...prev, { id: Date.now(), todo: todo }]);
+      setTodos((prev) => [...prev, { id: Date.now(), ...todo }]);
       toast.success("Task added successfully");
     }
 
@@ -39,7 +39,6 @@ function App() {
 
     if (confirm) {
       const newTasks = todos.filter((todo) => todo.id !== id);
-      console.log(newTasks);
       setTodos(newTasks);
       toast.error(`${todo} deleted successfully`);
     }
@@ -75,17 +74,17 @@ function App() {
                 key={task.id}
                 className="flex justify-between border p-3 rounded-md mt-5"
               >
-                <span>{task.todo.todo}</span>
+                <span>{task.todo}</span>
                 <div>
                   <span
                     className="cursor-pointer mr-5"
-                    onClick={() => reset({ id: task.id, todo: task.todo.todo })}
+                    onClick={() => reset({ id: task.id, todo: task.todo })}
                   >
                     🖊️
                   </span>
                   <span
                     className="cursor-pointer"
-                    onClick={() => deleteTodo(task.todo.todo, task.id)}
+                    onClick={() => deleteTodo(task.todo, task.id)}
                   >
                     ❌
                   </span>

@@ -22,7 +22,18 @@ function App() {
     reset({ id: null, todo: "" });
   };
   const updateTodo = () => {};
-  const deleteTodo = () => {};
+  const deleteTodo = (todo, id) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+
+    if (confirm) {
+      const newTasks = todos.filter((todo) => todo.id !== id);
+      console.log(newTasks);
+      setTodos(newTasks);
+      toast.error(`${todo} deleted successfully`);
+    }
+  };
   const onSubmit = (data) => {
     addTodo(data);
   };
@@ -48,30 +59,30 @@ function App() {
             />
           </form>
 
-          {/* <ul>
+          <ul>
             {todos.map((task) => (
               <li
                 key={task.id}
                 className="flex justify-between border p-3 rounded-md mt-5"
               >
-                <span>{task.todo}</span>
+                <span>{task.todo.todo}</span>
                 <div>
-                  <span
+                  {/* <span
                     className="cursor-pointer mr-5"
                     onClick={() => reset({ id: task.id, todo: task.todo })}
                   >
                     🖊️
-                  </span>
+                  </span> */}
                   <span
                     className="cursor-pointer"
-                    onClick={() => handleDelete(task.id, task.todo)}
+                    onClick={() => deleteTodo(task.todo.todo, task.id)}
                   >
                     ❌
                   </span>
                 </div>
               </li>
             ))}
-          </ul> */}
+          </ul>
         </div>
         <ToastContainer
           position="bottom-right"

@@ -12,16 +12,26 @@ function App() {
     reset,
   } = useForm();
   const [todos, setTodos] = useState([]);
-
   const addTodo = (todo) => {
-    console.log(todo);
-    setTodos((prev) => [...prev, { id: Date.now(), todo: todo }]);
-    console.log(todos);
-    toast.success("Task added successfully");
+    if (!todo) {
+      toast.error("Please enter the task");
+      return;
+    }
+
+    const { id } = todo;
+
+    if (id) {
+      const newTask = todos.map((t) => (t.id === id ? { ...t, todo } : t));
+      setTodos(newTask);
+      toast.info("Task updated successfully");
+    } else {
+      setTodos((prev) => [...prev, { id: Date.now(), todo: todo }]);
+      toast.success("Task added successfully");
+    }
 
     reset({ id: null, todo: "" });
   };
-  const updateTodo = () => {};
+
   const deleteTodo = (todo, id) => {
     const confirm = window.confirm(
       "Are you sure you want to delete this task?"
@@ -38,7 +48,7 @@ function App() {
     addTodo(data);
   };
   return (
-    <TodoProvider value={{ todos, addTodo, updateTodo, deleteTodo }}>
+    <TodoProvider value={{ todos, addTodo, deleteTodo }}>
       <div className="h-screen bg-gradient-to-r from-[#1F357B] via-[#42369d] to-[#3E1D6A] flex items-center justify-center">
         <div className="w-10/12 md:w-1/2 lg:w-1/3 h-auto p-10 mt-10 text-center mx-auto bg-gray-50 rounded-lg shadow-lg">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
@@ -67,12 +77,12 @@ function App() {
               >
                 <span>{task.todo.todo}</span>
                 <div>
-                  {/* <span
+                  <span
                     className="cursor-pointer mr-5"
-                    onClick={() => reset({ id: task.id, todo: task.todo })}
+                    onClick={() => reset({ id: task.id, todo: task.todo.todo })}
                   >
                     🖊️
-                  </span> */}
+                  </span>
                   <span
                     className="cursor-pointer"
                     onClick={() => deleteTodo(task.todo.todo, task.id)}

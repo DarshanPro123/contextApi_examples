@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TodoProvider } from "./contexts";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+const getData = () => {
+  const data = localStorage.getItem("Todos");
+  if (data) return JSON.parse(data);
+  return [];
+};
 
 function App() {
   const {
@@ -11,7 +17,7 @@ function App() {
     formState: { errors },
     reset,
   } = useForm();
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(getData());
   const addTodo = (todo) => {
     if (!todo) {
       toast.error("Please enter the task");
@@ -46,6 +52,10 @@ function App() {
   const onSubmit = (data) => {
     addTodo(data);
   };
+
+  useEffect(() => {
+    localStorage.setItem("Todos", JSON.stringify(todos));
+  }, [todos]);
   return (
     <TodoProvider value={{ todos, addTodo, deleteTodo }}>
       <div className="h-screen bg-gradient-to-r from-[#1F357B] via-[#42369d] to-[#3E1D6A] flex items-center justify-center">

@@ -27,8 +27,7 @@ function App() {
     const { id } = todo;
 
     if (id) {
-      const newTask = todos.map((t) => (t.id === id ? todo : t));
-      setTodos(newTask);
+      setTodos((newTask) => newTask.map((t) => (t.id === id ? todo : t)));
       toast.info("Task updated successfully");
     } else {
       setTodos((prev) => [...prev, { id: Date.now(), ...todo }]);
@@ -58,10 +57,10 @@ function App() {
   }, [todos]);
   return (
     <TodoProvider value={{ todos, addTodo, deleteTodo }}>
-      <div className="h-screen bg-gradient-to-r from-[#1F357B] via-[#42369d] to-[#3E1D6A] flex items-center justify-center">
+      <div className="h-screen bg-gradient-to-b from-[#6a1d39] via-[#96369d] to-[#6a1d4e] flex items-center justify-center">
         <div className="w-10/12 md:w-1/2 lg:w-1/3 h-auto p-10 mt-10 text-center mx-auto bg-gray-50 rounded-lg shadow-lg">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            My Todo Form ✅{" "}
+            My Todo Form ☑️{" "}
           </h1>
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -74,7 +73,7 @@ function App() {
             )}
             <input
               type="submit"
-              className="border py-3 hover:bg-gray-600 px-5 rounded mx-1 bg-gray-500 text-white cursor-pointer"
+              className="border py-3 hover:bg-[#ad3c66] px-5 rounded mx-1 bg-[#fa689e] text-white cursor-pointer"
             />
           </form>
 
@@ -90,13 +89,13 @@ function App() {
                     className="cursor-pointer mr-5"
                     onClick={() => reset({ id: task.id, todo: task.todo })}
                   >
-                    🖊️
+                    📂
                   </span>
                   <span
                     className="cursor-pointer"
                     onClick={() => deleteTodo(task.todo, task.id)}
                   >
-                    ❌
+                    ❎
                   </span>
                 </div>
               </li>

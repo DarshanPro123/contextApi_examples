@@ -9,6 +9,9 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setUser({ username, password });
+
+    setUsername("");
+    setPassword("");
   };
   return (
     <div className="border flex flex-col p-5 mx-auto max-w-screen-sm my-auto items-center justify-center gap-4">

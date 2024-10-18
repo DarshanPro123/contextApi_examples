@@ -3,6 +3,7 @@ import { TodoProvider } from "./contexts";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TodoForm from "./components/TodoForm";
 
 const getData = () => {
   const data = localStorage.getItem("Todos");
@@ -11,12 +12,7 @@ const getData = () => {
 };
 
 function App() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const { reset } = useForm();
   const [todos, setTodos] = useState(getData());
   const addTodo = (todo) => {
     if (!todo) {
@@ -48,9 +44,6 @@ function App() {
       toast.error(`${todo} deleted successfully`);
     }
   };
-  const onSubmit = (data) => {
-    addTodo(data);
-  };
 
   useEffect(() => {
     localStorage.setItem("Todos", JSON.stringify(todos));
@@ -63,19 +56,7 @@ function App() {
             My Todo Form ☑️{" "}
           </h1>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <input
-              {...register("todo", { required: true })}
-              className="border border-gray-300 py-3 px-5 rounded w-1/2 mb-5"
-            />
-            {errors.todo && (
-              <p className="text-red-500">This field is required</p>
-            )}
-            <input
-              type="submit"
-              className="border py-3 hover:bg-[#ad3c66] px-5 rounded mx-1 bg-[#fa689e] text-white cursor-pointer"
-            />
-          </form>
+          <TodoForm />
 
           <ul>
             {todos.map((task) => (
@@ -87,7 +68,7 @@ function App() {
                 <div>
                   <span
                     className="cursor-pointer mr-5"
-                    onClick={() => reset({ id: task.id, todo: task.todo })}
+                    onClick={() => reset({ id: task.id, todo: task.name })}
                   >
                     📂
                   </span>

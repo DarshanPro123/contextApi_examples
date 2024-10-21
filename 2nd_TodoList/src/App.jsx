@@ -61,7 +61,7 @@ function App() {
             My Todo Form ☑️{" "}
           </h1>
 
-          <TodoForm editTodo={editTodo} />
+          <TodoForm editTodo={editTodo} setEditTodo={setEditTodo} />
 
           <ul>
             {todos.map((task) => (

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { TodoContext } from "../contexts";
 
-const TodoForm = ({ editTodo }) => {
+const TodoForm = ({ editTodo, setEditTodo }) => {
   const { addTodo } = useContext(TodoContext);
   const {
     register,
@@ -31,6 +31,7 @@ const TodoForm = ({ editTodo }) => {
   const onSubmit = async (data) => {
     await delay(1);
     addTodo(data);
+    setEditTodo(null);
     reset({ id: null, todo: "" });
   };
 

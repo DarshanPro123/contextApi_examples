@@ -14,6 +14,7 @@ const getData = () => {
 function App() {
   const { reset } = useForm();
   const [todos, setTodos] = useState(getData());
+  const [editTodo, setEditTodo] = useState("");
   const addTodo = (todo) => {
     if (!todo) {
       toast.error("Please enter the task");
@@ -31,6 +32,10 @@ function App() {
     }
 
     reset({ id: null, todo: "" });
+  };
+
+  const handleUpdate = (id, name) => {
+    setEditTodo({ id, name });
   };
 
   const deleteTodo = (todo, id) => {
@@ -56,7 +61,7 @@ function App() {
             My Todo Form ☑️{" "}
           </h1>
 
-          <TodoForm />
+          <TodoForm editTodo={editTodo} />
 
           <ul>
             {todos.map((task) => (
@@ -68,7 +73,7 @@ function App() {
                 <div>
                   <span
                     className="cursor-pointer mr-5"
-                    onClick={() => reset({ id: task.id, todo: task.name })}
+                    onClick={() => handleUpdate(task.id, task.todo)}
                   >
                     📂
                   </span>

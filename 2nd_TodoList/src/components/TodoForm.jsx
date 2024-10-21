@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { TodoContext } from "../contexts";
 
-const TodoForm = () => {
+const TodoForm = ({ editTodo }) => {
   const { addTodo } = useContext(TodoContext);
   const {
     register,
@@ -15,14 +15,23 @@ const TodoForm = () => {
     return new Promise((resolve) =>
       setTimeout(() => {
         resolve();
-      }, d * 1000)
+      }, d * 100)
     );
   };
+
+  useEffect(() => {
+    if (editTodo) {
+      reset({
+        id: editTodo.id,
+        todo: editTodo.name,
+      });
+    }
+  }, [editTodo, reset]);
 
   const onSubmit = async (data) => {
     await delay(1);
     addTodo(data);
-    reset();
+    reset({ id: null, todo: "" });
   };
 
   return (
@@ -41,6 +50,7 @@ const TodoForm = () => {
         <input
           disabled={isSubmitting}
           type="submit"
+          value={editTodo ? "Update" : "Add"}
           className="border py-3 hover:bg-[#ad3c66] px-5 rounded mx-1 bg-[#fa689e] text-white cursor-pointer"
         />
       </form>

@@ -51,7 +51,7 @@ const PostProvider = ({ children }) => {
 };
 
 const usePosts = () => {
-  const context = useContext();
+  const context = useContext(PostContext);
   if (!context) {
     throw new Error("usePosts must be used within a PostProvider");
   }

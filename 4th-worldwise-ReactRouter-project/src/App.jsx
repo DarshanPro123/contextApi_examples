@@ -1,23 +1,23 @@
 import React from "react";
-import Home from "./pages/Home";
-import PricingPage from "./pages/PricingPage";
-import ProductPage from "./pages/ProductPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
-import PageNext from "./components/PageNext";
 import "./App.css";
+import Homepage from "./pages/Homepage";
+import Login from "./pages/Login";
+import Product from "./pages/Product";
+import Pricing from "./pages/Pricing";
+import AppLayout from "./pages/AppLayout";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <PageNext />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/pricing" element={<PricingPage />}></Route>
-        <Route path="/product" element={<ProductPage />}></Route>
-        <Route path="*" element={<PageNotFound />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Homepage />}></Route>
+      <Route path="/pricing" element={<Pricing />}></Route>
+      <Route path="/product" element={<Product />}></Route>
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/app" element={<AppLayout />}></Route>
+      <Route path="*" element={<PageNotFound />}></Route>
+    </Routes>
   );
 };
 
